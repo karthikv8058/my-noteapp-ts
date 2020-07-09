@@ -1,24 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Newitems from './containers/Newitems';
+import { useSelector, useDispatch } from 'react-redux';
+import {itemStates} from './containers/Newitems/reducer';
+import { type } from 'os';
+import { addItems } from './containers/Newitems/action';
 
 function App() {
+
+  const items = useSelector<itemStates,itemStates['items']>((state)=>state.items);
+
+  console.log('items:',items.length);
+  
+  const dispatch = useDispatch();
+
+  const onAddItem = (item:string) => {
+    dispatch(addItems(item));
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="d-flex justify-content-center w-100">
+          <div className="jumbotron w-50 border border-primary rounded-0">
+              <Newitems addItem={onAddItem}/>
+
+              <ul>
+                  {
+                    items.map((item)=>{
+                      return <li>{item}</li>
+                    })}
+              </ul>
+          </div>
+      </div>
     </div>
   );
 }
