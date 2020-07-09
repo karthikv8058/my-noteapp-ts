@@ -1,10 +1,8 @@
 import ActionTypes from './constants';
-import ContainerActions from './types';
+import {ContainerActions,itemStates} from './types';
  
-export interface itemStates{
-    items:string[]
-}
-const initialState ={
+
+export const initialState ={
     items:[]
 }
  

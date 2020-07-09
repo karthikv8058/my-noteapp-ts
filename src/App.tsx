@@ -2,15 +2,14 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Newitems from './containers/Newitems';
 import { useSelector, useDispatch } from 'react-redux';
-import {itemStates} from './containers/Newitems/reducer';
-import { type } from 'os';
+import {itemStates} from './containers/Newitems/types';
 import { addItems } from './containers/Newitems/action';
 
 function App() {
 
   const items = useSelector<itemStates,itemStates['items']>((state)=>state.items);
 
-  console.log('items:',items.length);
+  //console.log('items:',items.length);
   
   const dispatch = useDispatch();
 
@@ -26,8 +25,8 @@ function App() {
 
               <ul>
                   {
-                    items.map((item)=>{
-                      return <li>{item}</li>
+                    items.length>0&&items.map((item)=>{
+                      return <li key={item}>{item}</li>
                     })}
               </ul>
           </div>

@@ -1,11 +1,5 @@
-import { type } from "os"
-/*
- *
- * Testpage actions
- *
- */
 
-import { action,ActionType } from 'typesafe-actions';
+import { action } from 'typesafe-actions';
 
 import ActionTypes from './constants';
 

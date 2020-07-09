@@ -7,6 +7,8 @@ import ActionTypes from './constants';
 
 export function* getRepos() {
     // Select username from store
+    console.log('getRepos');
+    
     const requestURL ='https://jsonplaceholder.typicode.com/posts';
   
     try {
