@@ -1,6 +1,7 @@
 {
   "name": "my-noteapp-ts",
   "version": "0.1.0",
+  "author": "karthik v",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
