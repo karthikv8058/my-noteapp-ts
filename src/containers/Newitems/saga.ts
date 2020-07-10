@@ -1,6 +1,9 @@
-import { takeLatest } from 'redux-saga/effects';
-
+import { takeLatest,call,put } from 'redux-saga/effects';
+import axios from 'axios';
 import ActionTypes from './constants';
+import {
+  addItemsResponse,
+} from './action';
 
 
 
@@ -8,13 +11,16 @@ import ActionTypes from './constants';
 export function* getRepos() {
     // Select username from store
     console.log('getRepos');
+
+    function fetchFromApi() {
+      return axios.get('https://jsonplaceholder.typicode.com/comments')
+    }
     
-    const requestURL ='https://jsonplaceholder.typicode.com/posts';
   
     try {
-      // Call our request helper (see 'utils/request')
-    //   const repos = yield call(request, requestURL);
-    //   yield put(testDataResponseAction(repos));
+      const response = yield call(fetchFromApi);
+      console.log('response from axios :',response.data);
+      yield put(addItemsResponse(response.data));
     } catch (err) {
     //   yield put(testDataErrorAction(err));
     }

@@ -5,32 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import {itemStates} from './containers/Newitems/types';
 import { addItems } from './containers/Newitems/action';
 
+import Routes from './utils/router';
+
 function App() {
-
-  const items = useSelector<itemStates,itemStates['items']>((state)=>state.items);
-
-  //console.log('items:',items.length);
-  
-  const dispatch = useDispatch();
-
-  const onAddItem = (item:string) => {
-    dispatch(addItems(item));
-  }
-
   return (
     <div className="container">
-      <div className="d-flex justify-content-center w-100">
-          <div className="jumbotron w-50 border border-primary rounded-0">
-              <Newitems addItem={onAddItem}/>
-
-              <ul>
-                  {
-                    items.length>0&&items.map((item)=>{
-                      return <li key={item}>{item}</li>
-                    })}
-              </ul>
-          </div>
-      </div>
+      <Routes/>
     </div>
   );
 }

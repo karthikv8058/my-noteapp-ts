@@ -1,29 +1,54 @@
-import React, { useState,ChangeEvent } from 'react';
+import React, { FunctionComponent } from 'react';
 
-interface NewitemsProps{
-    addItem(item:string):void;
-}
+import { useSelector, useDispatch } from 'react-redux';
+import {itemStates} from './types';
+import { addItems } from './action';
+import Button from '../../components/Button';
 
-const Newitems:React.FC<NewitemsProps> = ({addItem}) =>{
+type newitemsProps = {
+    props: any,
+  }
 
-    const [item,setItem]=useState('');
+const Newitems : FunctionComponent<newitemsProps> = (props:newitemsProps) =>{
 
-    const handleOnChange = (event:ChangeEvent<HTMLInputElement>) =>{
-        setItem(event.target.value);
-    }
+    // console.log('Props :',props);
+    
+  const items = useSelector<itemStates,itemStates['items']>((state)=>state.items);
+  const itemsArr = useSelector<itemStates,itemStates['itemsArr']>((state)=>state.itemsArr);
+  const isloading = useSelector<itemStates,itemStates['isloading']>((state)=>state.isloading);
+  
+  const dispatch = useDispatch();
 
-    const handleOnClick = () => {
-        addItem(item);
-        setItem('');
-    }
+  console.log('Home itemsArr :',itemsArr);
+  
+
+  const onAddItem = (item:string) => {
+    dispatch(addItems(item));
+  }
 
     return(
-        <div>
-            <input onChange={handleOnChange} value={item} type="text" placeholder="Enter a new item" className="form-control rounded-0"/>
-              <button onClick={handleOnClick} className="btn btn-success mt-2 mx-auto d-block rounded-0">Add Items</button>
-              <hr/>
-              
-        </div>
+        <div className="w-100">
+          <div className="jumbotron w-50 border border-primary rounded-0 mx-auto">
+              <Button addItem={onAddItem}/>
+              <ul>
+                  {
+                    items.length>0&&items.map((item)=>{
+                      return <li key={item}>{item}</li>
+                    })}
+              </ul>
+          </div>
+
+          <div className="d-block jumbotron w-100 border border-50 rounded-0 bg-light mx-auto">
+              {
+                  isloading?'Calling API...':
+                  itemsArr.length>0 && itemsArr.slice(0,15).map((values:any)=>{
+                    return <p> # {values.name} </p>
+                  })
+              }
+          </div>
+
+      </div>
+        
     );
 }
 
